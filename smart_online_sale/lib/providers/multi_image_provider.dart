@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +9,12 @@ class MultiImageProvider with ChangeNotifier {
   // ignore: prefer_final_fields
   List<XFile> _images = [];
   get images => _images;
+
+  imageOld(dynamic oldImages) {
+    XFile xFile = XFile(oldImages);
+    _images.add(xFile);
+    notifyListeners();
+  }
 
   void uploadMultiImages() async {
     final List<XFile> pickImages = await imagepicker.pickMultiImage();
