@@ -23,8 +23,8 @@ class BtnIconWithIncrement extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(09),
-            height: 35.h,
-            width: 35.w,
+            height: 45.h,
+            width: 45.w,
             decoration: BoxDecoration(
               color: kSecondaryColor.withOpacity(0.1),
               shape: BoxShape.circle,
@@ -33,8 +33,8 @@ class BtnIconWithIncrement extends StatelessWidget {
           ),
           if (noOfIncre != 0)
             Positioned(
-              top: 4.h,
-              right: -2.h,
+              top: 0.w,
+              right: 10.w,
               child: Container(
                 height: 10.h,
                 width: 10.h,

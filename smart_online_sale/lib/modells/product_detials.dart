@@ -1,5 +1,6 @@
 class ProductDetails {
   final String category;
+  final String subCategory;
   final String id;
   final String brandName;
   final String name;
@@ -14,6 +15,7 @@ class ProductDetails {
 
   ProductDetails({
     required this.category,
+    required this.subCategory,
     required this.id,
     required this.brandName,
     required this.name,
@@ -29,6 +31,7 @@ class ProductDetails {
 
   factory ProductDetails.fromMap(map) => ProductDetails(
       category: map['category'],
+      subCategory: map['subCategory'],
       id: map['id'],
       brandName: map['brandName'],
       name: map['name'],
@@ -44,6 +47,7 @@ class ProductDetails {
   Map<String, dynamic> toMap() {
     return {
       "category": category,
+      "subCategory": subCategory,
       "id": id,
       "brandName": brandName,
       "name": name,

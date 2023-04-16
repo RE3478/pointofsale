@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_online_sale/components/btn_icon_incre.dart';
 import 'package:smart_online_sale/components/search_bar.dart';
+import 'package:smart_online_sale/utils/routes_redirection.dart';
 import 'package:smart_online_sale/utils/wigets/carousal_wigdet.dart';
 import 'package:smart_online_sale/utils/wigets/text_wigdets.dart';
+import '../utils/constant.dart';
 
 class HomeScreenPage extends StatefulWidget {
-  const HomeScreenPage({super.key});
+  const HomeScreenPage({
+    super.key,
+  });
 
   @override
   State<HomeScreenPage> createState() => _HomeScreenPageState();
@@ -15,17 +19,6 @@ class HomeScreenPage extends StatefulWidget {
 
 class _HomeScreenPageState extends State<HomeScreenPage>
     with TickerProviderStateMixin {
-  final List images = [
-    "https://images.unsplash.com/photo-1585565804112-f201f68c48b4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzR8fHByb2R1Y3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1539185441755-769473a23570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OTV8fHByb2R1Y3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTAyfHxwcm9kdWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1610395219791-21b0353e43cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
-    "https://images.unsplash.com/photo-1614169020226-0881cc29d64f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Mnw2MDA4MzE4OHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1584590069631-1c180f90a54c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTU5fHxwcm9kdWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    "https://plus.unsplash.com/premium_photo-1664283229426-4d10dae7cd08?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTkzfHxwcm9kdWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1602810316498-ab67cf68c8e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-  ];
-
   // ignore: prefer_typing_uninitialized_variables
   var tabController;
 
@@ -40,97 +33,74 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Home Screen',
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 25.sp,
+              fontWeight: FontWeight.bold),
+        ),
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back)),
+          onPressed: () {
+            Navigator.popAndPushNamed(context, RouteGenerator.addProduct);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                left: 15.w,
-                right: 15.w,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SearchingBar(
-                    searchController: searchController,
-                  ),
-                  Row(
-                    children: [
-                      BtnIconWithIncrement(
-                        noOfIncre: 3,
-                        press: () {},
-                        imagePng: 'images/shopcart.png',
-                      ),
-                      BtnIconWithIncrement(
-                        noOfIncre: 3,
-                        press: () {},
-                        imagePng: 'icons/bell.png',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
             Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r)),
-              elevation: 1,
-              child: TabBar(
-                  indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.r),
-                      color: Colors.deepOrange.shade400),
-                  controller: tabController,
-                  isScrollable: true,
-                  labelPadding: EdgeInsets.symmetric(horizontal: 20.w),
-                  tabs: const [
-                    Tab(
-                        child: Text('All',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontStyle: FontStyle.italic))),
-                    Tab(
-                        child: Text('Clothes',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontStyle: FontStyle.italic))),
-                    Tab(
-                        child: Text('Gadgets',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontStyle: FontStyle.italic))),
-                    Tab(
-                        child: Text('Grocery',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontStyle: FontStyle.italic))),
-                    Tab(
-                        child: Text('Electronics',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontStyle: FontStyle.italic))),
-                    Tab(
-                        child: Text('Shoes',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontStyle: FontStyle.italic))),
-                    Tab(
-                        child: Text('Cosmetics',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontStyle: FontStyle.italic))),
-                  ]),
-            ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r)),
+                elevation: 1,
+                child: TabBar(
+                    indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.r),
+                        color: Colors.deepOrange.shade400),
+                    controller: tabController,
+                    isScrollable: true,
+                    labelPadding: EdgeInsets.symmetric(horizontal: 20.w),
+                    tabs: const [
+                      Tab(
+                          child: Text('All',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Tab(
+                          child: Text('Clothes',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Tab(
+                          child: Text('Gadgets',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Tab(
+                          child: Text('Grocery',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Tab(
+                          child: Text('Electronics',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Tab(
+                          child: Text('Shoes',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Tab(
+                          child: Text('Cosmetics',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic)))
+                    ])),
             Flexible(
               fit: FlexFit.loose,
               child: TabBarView(
@@ -143,14 +113,364 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                         child: ListView(
                           physics: const BouncingScrollPhysics(),
                           children: [
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SearchingBar(
+                                    searchController: searchController,
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'images/shopcart.png',
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'icons/bell.png',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 05.h),
                             CarouselSilderWigdet(images: images),
                             const TextWidgetAll(leftText: 'New Arrival'),
+                            Container(
+                              height: 260.h,
+                              decoration: const BoxDecoration(
+                                  color: Colors.transparent),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("products")
+                                      .snapshots(),
+                                  builder: (context,
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    } else if (snapshot.data == null) {
+                                      return const Center(
+                                          child: Text(" Data Doesn't exists"));
+                                    }
+                                    final proData = snapshot.data!.docs;
+                                    return GridView.builder(
+                                      shrinkWrap: true,
+                                      primary: true,
+                                      itemCount: proData
+                                          .where((e) => e['isFavorite'] == true)
+                                          .length,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 0.7),
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () {},
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5.h,
+                                                bottom: 5.h,
+                                                left: 10.h,
+                                                right: 10.h),
+                                            decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                    child: Container(
+                                                        width: double.infinity,
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors
+                                                                .transparent,
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    10.r),
+                                                            image: DecorationImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                image: NetworkImage(
+                                                                    proData[index]
+                                                                            ['imageUrl']
+                                                                        [0]))),
+                                                        child: IconButton(
+                                                            onPressed: () {},
+                                                            icon: const Icon(
+                                                                Icons.favorite_border)))),
+                                                SizedBox(height: 05.h),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10.w),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                            proData[index]
+                                                                    ['name']
+                                                                .toString(),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        Text(
+                                                            proData[index][
+                                                                    'brandName']
+                                                                .toString(),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      8.w),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                  '\$ ${proData[index]['price']}',
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                              SizedBox(
+                                                                  width: 20.w),
+                                                              Text(
+                                                                  '\$ ${proData[index]['discountPrice']}',
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            Divider(indent: 16, endIndent: 16, height: 2.h),
+                            const TextWidgetAll(leftText: 'Popular Products'),
+                            Container(
+                              height: 150.h,
+                              decoration: const BoxDecoration(
+                                  color: Colors.transparent),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 05.h, horizontal: 10.w),
+                                child: StreamBuilder(
+                                    stream: FirebaseFirestore.instance
+                                        .collection("products")
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (!snapshot.hasData) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      } else if (snapshot.data == null) {
+                                        return const Center(
+                                            child: Text("Data Doesn't exits"));
+                                      }
+                                      final popularData = snapshot.data!.docs;
+                                      return ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount: popularData
+                                              .where(
+                                                  (e) => e['isPopular'] == true)
+                                              .toList()
+                                              .length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {},
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                      width: 100.h,
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.grey),
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.r),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  popularData[index]
+                                                                          ['imageUrl']
+                                                                      [0]))),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                              Icons.favorite_border))),
+                                                  SizedBox(width: 05.w),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                            popularData[index]
+                                                                    ['name']
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 10),
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        SizedBox(height: 02.h),
+                                                        Text(
+                                                            popularData[index][
+                                                                    'brandName']
+                                                                .toString(),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        SizedBox(height: 02.h),
+                                                        Text(
+                                                            popularData[index]
+                                                                ['serialNo'],
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        SizedBox(height: 02.h),
+                                                        Text(
+                                                            '\$ ${popularData[index]['price']}',
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        SizedBox(height: 02.h),
+                                                        Text(
+                                                            '\$ ${popularData[index]['discountPrice']}',
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    }),
+                              ),
+                            ),
+                            Divider(indent: 16, endIndent: 16, height: 2.h),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView(
+                          children: [
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SearchingBar(
+                                    searchController: searchController,
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'images/shopcart.png',
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'icons/bell.png',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 05.h),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 12.0),
                               child: StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection('products')
+                                    .where('category', isEqualTo: 'Clothes')
                                     .snapshots(),
                                 builder: (context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -159,9 +479,10 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                         child: CircularProgressIndicator());
                                   } else if (snapshot.data == null) {
                                     return const Center(
-                                        child: Text(" Data Doesn't exist"));
+                                        child: Text(" Data Doesn't exists"));
                                   }
                                   final proData = snapshot.data!.docs;
+
                                   return GridView.builder(
                                     shrinkWrap: true,
                                     primary: true,
@@ -174,11 +495,15 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                       return GestureDetector(
                                         onTap: () {},
                                         child: Container(
-                                          margin: EdgeInsets.all(10.h),
+                                          margin: EdgeInsets.only(
+                                              top: 5.h,
+                                              bottom: 5.h,
+                                              left: 10.h,
+                                              right: 10.h),
                                           decoration: BoxDecoration(
                                             color: Colors.transparent,
                                             borderRadius:
-                                                BorderRadius.circular(05.r),
+                                                BorderRadius.circular(10.r),
                                           ),
                                           child: Column(
                                             mainAxisAlignment:
@@ -187,31 +512,27 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Expanded(
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  alignment: Alignment.topRight,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.r),
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: NetworkImage(
-                                                        proData[index]
-                                                            ['imageUrl'][0],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  child: IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(Icons
-                                                          .favorite_border)),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 05.h,
-                                              ),
+                                                  child: Container(
+                                                      width: double.infinity,
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.r),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  proData[index]
+                                                                          ['imageUrl']
+                                                                      [0]))),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                              Icons.favorite_border)))),
+                                              SizedBox(height: 05.h),
                                               Expanded(
                                                 child: Padding(
                                                   padding: EdgeInsets.symmetric(
@@ -224,26 +545,24 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        proData[index]['name']
-                                                            .toString(),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
+                                                          proData[index]['name']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
                                                       Text(
-                                                        proData[index]
-                                                                ['brandName']
-                                                            .toString(),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
+                                                          proData[index]
+                                                                  ['brandName']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
                                                       Padding(
                                                         padding: EdgeInsets
                                                             .symmetric(
@@ -255,32 +574,25 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                                                   .spaceBetween,
                                                           children: [
                                                             Text(
-                                                              '\$ ${proData[index]['price']}',
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
+                                                                '\$ ${proData[index]['price']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
                                                             SizedBox(
-                                                              width: 20.w,
-                                                            ),
+                                                                width: 20.w),
                                                             Text(
-                                                              '\$ ${proData[index]['discountPrice']}',
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
+                                                                '\$ ${proData[index]['discountPrice']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
                                                           ],
                                                         ),
                                                       ),
@@ -297,10 +609,187 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                 },
                               ),
                             ),
-                            Divider(
-                              indent: 16,
-                              endIndent: 16,
-                              height: 2.h,
+                          ],
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView(
+                          children: [
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SearchingBar(
+                                    searchController: searchController,
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'images/shopcart.png',
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'icons/bell.png',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 05.h),
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('products')
+                                    .where('category', isEqualTo: 'Gadgets')
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.data == null) {
+                                    return const Center(
+                                        child: Text(" Data Doesn't exists"));
+                                  }
+                                  final proData = snapshot.data!.docs;
+
+                                  return GridView.builder(
+                                    shrinkWrap: true,
+                                    primary: true,
+                                    itemCount: proData.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: 5.h,
+                                              bottom: 5.h,
+                                              left: 10.h,
+                                              right: 10.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  child: Container(
+                                                      width: double.infinity,
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.r),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  proData[index]
+                                                                          ['imageUrl']
+                                                                      [0]))),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                              Icons.favorite_border)))),
+                                              SizedBox(height: 05.h),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10.w),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          proData[index]['name']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(
+                                                          proData[index]
+                                                                  ['brandName']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                                '\$ ${proData[index]['price']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            SizedBox(
+                                                                width: 20.w),
+                                                            Text(
+                                                                '\$ ${proData[index]['discountPrice']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -309,78 +798,728 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Text("Hello World $index");
-                          },
+                        child: ListView(
+                          children: [
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SearchingBar(
+                                    searchController: searchController,
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'images/shopcart.png',
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'icons/bell.png',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 05.h),
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('products')
+                                    .where('category', isEqualTo: 'Grocery')
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.data == null) {
+                                    return const Center(
+                                        child: Text(" Data Doesn't exists"));
+                                  }
+                                  final proData = snapshot.data!.docs;
+
+                                  return GridView.builder(
+                                    shrinkWrap: true,
+                                    primary: true,
+                                    itemCount: proData.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: 5.h,
+                                              bottom: 5.h,
+                                              left: 10.h,
+                                              right: 10.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  child: Container(
+                                                      width: double.infinity,
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.r),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  proData[index]
+                                                                          ['imageUrl']
+                                                                      [0]))),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                              Icons.favorite_border)))),
+                                              SizedBox(height: 05.h),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10.w),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          proData[index]['name']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(
+                                                          proData[index]
+                                                                  ['brandName']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                                '\$ ${proData[index]['price']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            SizedBox(
+                                                                width: 20.w),
+                                                            Text(
+                                                                '\$ ${proData[index]['discountPrice']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Text("Hello World $index");
-                          },
+                        child: ListView(
+                          children: [
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SearchingBar(
+                                    searchController: searchController,
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'images/shopcart.png',
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'icons/bell.png',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 05.h),
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('products')
+                                    .where('category', isEqualTo: 'Electronics')
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.data == null) {
+                                    return const Center(
+                                        child: Text(" Data Doesn't exists"));
+                                  }
+                                  final proData = snapshot.data!.docs;
+
+                                  return GridView.builder(
+                                    shrinkWrap: true,
+                                    primary: true,
+                                    itemCount: proData.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: 5.h,
+                                              bottom: 5.h,
+                                              left: 10.h,
+                                              right: 10.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  child: Container(
+                                                      width: double.infinity,
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.r),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  proData[index]
+                                                                          ['imageUrl']
+                                                                      [0]))),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                              Icons.favorite_border)))),
+                                              SizedBox(height: 05.h),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10.w),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          proData[index]['name']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(
+                                                          proData[index]
+                                                                  ['brandName']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                                '\$ ${proData[index]['price']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            SizedBox(
+                                                                width: 20.w),
+                                                            Text(
+                                                                '\$ ${proData[index]['discountPrice']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Text("Hello World $index");
-                          },
+                        child: ListView(
+                          children: [
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SearchingBar(
+                                    searchController: searchController,
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'images/shopcart.png',
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'icons/bell.png',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 05.h),
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('products')
+                                    .where('category', isEqualTo: 'Shoes')
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.data == null) {
+                                    return const Center(
+                                        child: Text(" Data Doesn't exists"));
+                                  }
+                                  final proData = snapshot.data!.docs;
+
+                                  return GridView.builder(
+                                    shrinkWrap: true,
+                                    primary: true,
+                                    itemCount: proData.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: 5.h,
+                                              bottom: 5.h,
+                                              left: 10.h,
+                                              right: 10.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  child: Container(
+                                                      width: double.infinity,
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.r),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  proData[index]
+                                                                          ['imageUrl']
+                                                                      [0]))),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                              Icons.favorite_border)))),
+                                              SizedBox(height: 05.h),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10.w),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          proData[index]['name']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(
+                                                          proData[index]
+                                                                  ['brandName']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                                '\$ ${proData[index]['price']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            SizedBox(
+                                                                width: 20.w),
+                                                            Text(
+                                                                '\$ ${proData[index]['discountPrice']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Text("Hello World $index");
-                          },
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Text("Hello World $index");
-                          },
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Text("Hello World $index");
-                          },
+                        child: ListView(
+                          children: [
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SearchingBar(
+                                    searchController: searchController,
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'images/shopcart.png',
+                                  ),
+                                  BtnIconWithIncrement(
+                                    noOfIncre: 3,
+                                    press: () {},
+                                    imagePng: 'icons/bell.png',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 05.h),
+                            SizedBox(height: 05.h),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('products')
+                                    .where('category', isEqualTo: 'Cosmetics')
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.data == null) {
+                                    return const Center(
+                                        child: Text(" Data Doesn't exists"));
+                                  }
+                                  final proData = snapshot.data!.docs;
+
+                                  return GridView.builder(
+                                    shrinkWrap: true,
+                                    primary: true,
+                                    itemCount: proData.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: 5.h,
+                                              bottom: 5.h,
+                                              left: 10.h,
+                                              right: 10.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  child: Container(
+                                                      width: double.infinity,
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.r),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  proData[index]
+                                                                          ['imageUrl']
+                                                                      [0]))),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                              Icons.favorite_border)))),
+                                              SizedBox(height: 05.h),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10.w),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          proData[index]['name']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(
+                                                          proData[index]
+                                                                  ['brandName']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                                '\$ ${proData[index]['price']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            SizedBox(
+                                                                width: 20.w),
+                                                            Text(
+                                                                '\$ ${proData[index]['discountPrice']}',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

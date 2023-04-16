@@ -53,24 +53,24 @@ class Categories {
   }
 }
 
-class StateModel {
-  String state;
-  String alias;
-  List<String> lgas;
+// class StateModel {
+//   String state;
+//   String alias;
+//   List<String> lgas;
 
-  StateModel({required this.state, required this.alias, required this.lgas});
+//   StateModel({required this.state, required this.alias, required this.lgas});
 
-  factory StateModel.fromJson(Map<String, dynamic> json) => StateModel(
-        state: json['state'],
-        alias: json['alias'],
-        lgas: json['lgas'],
-      );
+//   factory StateModel.fromJson(Map<String, dynamic> json) => StateModel(
+//         state: json['state'],
+//         alias: json['alias'],
+//         lgas: json['lgas'],
+//       );
 
-  Map<String, dynamic> toJson() {
-    return {
-      'state': state,
-      'alias': alias,
-      'lgas': lgas,
-    };
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'state': state,
+//       'alias': alias,
+//       'lgas': lgas,
+//     };
+//   }
+// }

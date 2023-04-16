@@ -25,7 +25,8 @@ class ProductUpdationProvider with ChangeNotifier {
     isPopular,
     isFavourite,
     final brandController,
-    String? proDataId,
+    final proDataId,
+    final subCategoryValue,
   ) async {
     String dowloadUrl = '';
     for (var image in images) {
@@ -45,6 +46,7 @@ class ProductUpdationProvider with ChangeNotifier {
     /// assign data to product model
     productDetails = ProductDetails(
       category: categoryValue,
+      subCategory: categoryValue,
       id: idController,
       brandName: brandController,
       name: nameController,

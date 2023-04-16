@@ -102,6 +102,8 @@ class _UpdateProductState extends State<UpdateProduct> {
                                                 ['isFavorite'],
                                             discountPrice: proData[index]
                                                 ['discountPrice'],
+                                            subCategory: proData[index]
+                                                ['subCategory'],
                                           ),
                                         ),
                                       ),

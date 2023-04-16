@@ -9,11 +9,10 @@ import 'package:smart_online_sale/providers/multi_image_provider.dart';
 import 'package:smart_online_sale/providers/product_updation_provider.dart';
 import 'package:smart_online_sale/providers/switch_list_provider.dart';
 
-// ignore: must_be_immutable
 class ProductUpdationScreen extends StatefulWidget {
-  String? proDataId;
-  ProductDetails? productValue;
-  ProductUpdationScreen(
+  final String? proDataId;
+  final ProductDetails? productValue;
+  const ProductUpdationScreen(
       {super.key, required this.proDataId, required this.productValue});
 
   @override
@@ -29,8 +28,9 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
   final _priceController = TextEditingController();
   final _serialNoController = TextEditingController();
   final _discountPriceController = TextEditingController();
+
   @override
-  void initState() {
+  void didChangeDependencies() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       for (int i = 0; i < widget.productValue!.imageUrl.length; i++) {
         Provider.of<MultiImageProvider>(context, listen: false)
@@ -38,11 +38,17 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
       }
     });
     _idController.text = widget.productValue!.id;
+    _serialNoController.text = widget.productValue!.serialNo;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<CategoryProviderForDropDown>(context, listen: false)
+          .onChangeDropValue(widget.productValue!.category)!;
+      Provider.of<CategoryProviderForDropDown>(context, listen: false)
+          .onChangeDropSubValue(widget.productValue!.subCategory)!;
+    });
     _brandController.text = widget.productValue!.brandName;
     _nameController.text = widget.productValue!.name;
     _descriptionController.text = widget.productValue!.description;
     _priceController.text = widget.productValue!.price.toString();
-    _serialNoController.text = widget.productValue!.serialNo;
     _discountPriceController.text =
         widget.productValue!.discountPrice.toString();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -52,13 +58,8 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
           .previousInPopular = widget.productValue!.isPopular;
       Provider.of<SwitchListTileFavouriteProvider>(context, listen: false)
           .previousFavourite = widget.productValue!.isFavorite;
-      if (widget.productValue!.category.isNotEmpty) {
-        Provider.of<CategoryProviderForDropDown>(context, listen: false)
-            .onChangeDropValue(widget.productValue!.category);
-      }
     });
-
-    super.initState();
+    super.didChangeDependencies();
   }
 
   void _updateProductOnFirebase(BuildContext context) async {
@@ -89,16 +90,25 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
           .isFavourite,
       _brandController.text,
       widget.proDataId.toString(),
+      Provider.of<CategoryProviderForDropDown>(context, listen: false)
+          .subCategorySelection!
+          .subName
+          .toString(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     Provider.of<SwitchListTileStockProvider>(context, listen: false);
+    Provider.of<CategoryProviderForDropDown>(context, listen: false);
     Provider.of<SwitchListTilePopularProvider>(context, listen: false);
     Provider.of<SwitchListTileFavouriteProvider>(context, listen: false);
     var multiProvider = Provider.of<MultiImageProvider>(context, listen: false);
     return Scaffold(
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: const Text('Home Screen'),
+      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -248,6 +258,48 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
                         width: 5.w,
                       ),
                       Expanded(
+                        child: TextFormField(
+                          controller: _serialNoController,
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: 'abc12345',
+                            label: Text(
+                              'Product serial no',
+                              style: TextStyle(
+                                  color: const Color(0xFFFF7643),
+                                  fontSize: 14.sp),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.numbers,
+                              color: Color.fromARGB(255, 153, 90, 67),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter product serial no';
+                            } else if (!RegExp(r"^[a-zA-Z0-9]+$")
+                                .hasMatch(value)) {
+                              return 'Please enter valid serial no';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
                         child: Consumer<CategoryProviderForDropDown>(
                           builder: (context, cSP, child) =>
                               DropdownButtonFormField<CategorySelection>(
@@ -290,7 +342,49 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
                       ),
                       SizedBox(
                         width: 05.w,
-                      )
+                      ),
+                      Expanded(
+                        child: Consumer<CategoryProviderForDropDown>(
+                          builder: (context, sCsP, child) =>
+                              DropdownButtonFormField<SubCategorySelection>(
+                            value: sCsP.subCategorySelection,
+                            items: sCsP.filterSubValues
+                                .map<DropdownMenuItem<SubCategorySelection>>(
+                                    (e) {
+                              return DropdownMenuItem<SubCategorySelection>(
+                                value: e.value!,
+                                child: Text(e.value!.subName),
+                              );
+                            }).toList(),
+                            onChanged: (subValue) {
+                              sCsP.onChangeSubValue(subValue);
+                            },
+                            validator: (value) {
+                              value == null ? 'select Sub category' : null;
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(
+                                Icons.category,
+                                color: Color.fromARGB(255, 153, 90, 67),
+                              ),
+                              hintText: "Choose Sub category",
+                              label: Text(
+                                'Sub Category',
+                                style: TextStyle(
+                                    color: const Color(0xFFFF7643),
+                                    fontSize: 14.sp),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -375,37 +469,6 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
                   ),
                   SizedBox(
                     height: 5.h,
-                  ),
-                  TextFormField(
-                    controller: _serialNoController,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      hintText: 'abc12345',
-                      label: Text(
-                        'Product serial no',
-                        style: TextStyle(
-                            color: const Color(0xFFFF7643), fontSize: 14.sp),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.numbers,
-                        color: Color.fromARGB(255, 153, 90, 67),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product serial no';
-                      } else if (!RegExp(r"^[a-zA-Z0-9]+$").hasMatch(value)) {
-                        return 'Please enter valid serial no';
-                      }
-                      return null;
-                    },
                   ),
                   SizedBox(
                     height: 15.h,
@@ -589,7 +652,7 @@ class _ProductUpdationScreenState extends State<ProductUpdationScreen> {
                       ),
                       child: Text(
                         'save',
-                        style: Theme.of(context).textTheme.button,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ),

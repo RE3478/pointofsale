@@ -46,13 +46,19 @@ class _AddProductState extends State<AddProduct> {
                 .name
                 .toString(),
             Provider.of<MultiImageProvider>(context, listen: false).images,
-            Provider.of<SwitchListTileStockProvider>(context, listen: false)
+            Provider.of<SwitchListTileStockProvider>(
+                    context,
+                    listen: false)
                 .inSale,
             Provider.of<SwitchListTilePopularProvider>(context, listen: false)
                 .isPopular,
             Provider.of<SwitchListTileFavouriteProvider>(context, listen: false)
                 .isFavourite,
-            _brandController.text);
+            _brandController.text,
+            Provider.of<CategoryProviderForDropDown>(context, listen: false)
+                .subCategorySelection!
+                .subName
+                .toString());
   }
 
   @override
@@ -199,7 +205,7 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
                       SizedBox(
-                        width: 02.w,
+                        width: 05.w,
                       ),
                       Expanded(
                         child: TextFormField(
@@ -241,86 +247,95 @@ class _AddProductState extends State<AddProduct> {
                   SizedBox(
                     height: 15.h,
                   ),
-                  Consumer<CategoryProviderForDropDown>(
-                    builder: (context, cSP, child) =>
-                        DropdownButtonFormField<CategorySelection>(
-                      value: cSP.selectedCategory,
-                      items: cSP.listOfCategory
-                          .map<DropdownMenuItem<CategorySelection>>((e) {
-                        return DropdownMenuItem<CategorySelection>(
-                          value: e.value!,
-                          child: Text(e.value!.name),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        cSP.onChangeValue(value);
-                      },
-                      validator: (value) {
-                        value == null ? 'select category' : null;
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.category,
-                          color: Color.fromARGB(255, 153, 90, 67),
-                        ),
-                        hintText: "Choose category",
-                        label: Text(
-                          'Category',
-                          style: TextStyle(
-                              color: const Color(0xFFFF7643), fontSize: 14.sp),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  Consumer<CategoryProviderForDropDown>(
-                    builder: (context, sCsP, child) =>
-                        DropdownButtonFormField<SubCategorySelection>(
-                      value: null,
-                      // value: sCsP.subCategorySelection,
-                      // items: sCsP.listofSubCategory
-                      items:
-                          [].map<DropdownMenuItem<SubCategorySelection>>((e) {
-                        return DropdownMenuItem<SubCategorySelection>(
-                          value: e.value!,
-                          child: Text(e.value!.subName),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        // sCsP.onChangeSubValue(value);
-                      },
-                      validator: (value) {
-                        value == null ? 'select Sub category' : null;
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.category,
-                          color: Color.fromARGB(255, 153, 90, 67),
-                        ),
-                        hintText: "Choose Sub category",
-                        label: Text(
-                          'Sub Category',
-                          style: TextStyle(
-                              color: const Color(0xFFFF7643), fontSize: 14.sp),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Consumer<CategoryProviderForDropDown>(
+                          builder: (context, cSP, child) =>
+                              DropdownButtonFormField<CategorySelection>(
+                            value: cSP.selectedCategory,
+                            items: cSP.listOfCategory
+                                .map<DropdownMenuItem<CategorySelection>>((e) {
+                              return DropdownMenuItem<CategorySelection>(
+                                value: e.value,
+                                child: Text(e.value!.name),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              cSP.onChangeValue(value);
+                            },
+                            validator: (value) {
+                              value == null ? 'select category' : null;
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(
+                                Icons.category,
+                                color: Color.fromARGB(255, 153, 90, 67),
+                              ),
+                              hintText: "Choose category",
+                              label: Text(
+                                'Category',
+                                style: TextStyle(
+                                    color: const Color(0xFFFF7643),
+                                    fontSize: 14.sp),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Expanded(
+                        child: Consumer<CategoryProviderForDropDown>(
+                          builder: (context, sCsP, child) =>
+                              DropdownButtonFormField<SubCategorySelection>(
+                            value: sCsP.subCategorySelection,
+                            items: sCsP.filterSubValues
+                                .map<DropdownMenuItem<SubCategorySelection>>(
+                                    (e) {
+                              return DropdownMenuItem<SubCategorySelection>(
+                                value: e.value!,
+                                child: Text(e.value!.subName),
+                              );
+                            }).toList(),
+                            onChanged: (subValue) {
+                              sCsP.onChangeSubValue(subValue);
+                            },
+                            validator: (value) {
+                              value == null ? 'select Sub category' : null;
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(
+                                Icons.category,
+                                color: Color.fromARGB(255, 153, 90, 67),
+                              ),
+                              hintText: "Choose Sub category",
+                              label: Text(
+                                'Sub Category',
+                                style: TextStyle(
+                                    color: const Color(0xFFFF7643),
+                                    fontSize: 14.sp),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 15.h),
                   Row(
@@ -361,7 +376,7 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
                       SizedBox(
-                        width: 02.w,
+                        width: 05.w,
                       ),
                       Expanded(
                         child: TextFormField(
@@ -474,7 +489,7 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
                       SizedBox(
-                        width: 02.w,
+                        width: 05.w,
                       ),
                       Expanded(
                         child: TextFormField(

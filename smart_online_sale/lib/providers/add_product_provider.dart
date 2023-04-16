@@ -19,12 +19,13 @@ class AddProductProvider with ChangeNotifier {
     final priceController,
     final serialNoController,
     final discountPriceController,
-    selectedCategory,
+    final selectedCategory,
     List<XFile> images,
     bool inSale,
     bool isPopular,
     bool isFavorite,
     final brandNameController,
+    final subSelectionCategory,
   ) async {
     // ignore: unused_local_variable
 
@@ -46,6 +47,7 @@ class AddProductProvider with ChangeNotifier {
     /// assign data to product model
     productDetails = ProductDetails(
       category: selectedCategory,
+      subCategory: subSelectionCategory,
       id: idController,
       brandName: brandNameController,
       name: nameController,

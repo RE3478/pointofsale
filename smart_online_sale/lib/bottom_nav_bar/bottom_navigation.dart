@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smart_online_sale/admin_works_pages/admin_page.dart';
 import 'package:smart_online_sale/admin_works_pages/update_product.dart';
-import 'package:smart_online_sale/screens_pages/categories_screen.dart';
 import 'package:smart_online_sale/screens_pages/home_screen_page.dart';
 import 'package:smart_online_sale/screens_pages/login_page.dart';
 import 'package:smart_online_sale/screens_pages/user_profile_page.dart';
@@ -17,7 +17,7 @@ class _BottomNaviForStoreState extends State<BottomNaviForStore> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreenPage(),
-    CategoriesScreen(),
+    AdminPage(),
     UpdateProduct(),
     LoginPage(),
     UserProfilePage(),
@@ -57,10 +57,7 @@ class _BottomNaviForStoreState extends State<BottomNaviForStore> {
             label: 'Shop-Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite,
-              color: Colors.red,
-            ),
+            icon: Icon(Icons.favorite),
             label: 'Favourite',
           ),
           BottomNavigationBarItem(

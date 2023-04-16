@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_online_sale/providers/search_provider.dart';
 import 'package:smart_online_sale/utils/constant.dart';
 
 class SearchingBar extends StatelessWidget {
@@ -12,15 +14,18 @@ class SearchingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<SearchProvider>(context, listen: false);
     return Container(
       width: 240.w,
-      height: 40.h,
+      height: 45.h,
       decoration: BoxDecoration(
         color: kSecondaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(15.r),
       ),
       child: TextFormField(
-        onChanged: (value) {},
+        onChanged: (value) {
+          // Provider.of<SearchProvider>(context, listen: false).setQuery(value);
+        },
         controller: searchController,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.search,
