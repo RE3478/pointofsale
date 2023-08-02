@@ -1,6 +1,6 @@
 {
-    "name": "smart_online_point",
-    "short_name": "smart_online_point",
+    "name": "smart_online_sale",
+    "short_name": "smart_online_sale",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
