@@ -126,8 +126,9 @@ class CategoryProviderForDropDown with ChangeNotifier {
     }
     if (oldValue!.cId == catId) {
       _selectedCategory = oldValue;
+
       print(33333333);
-      print(_selectedCategory!.toMap());
+      print(_selectedCategory!.toMap().entries);
     }
 
     notifyListeners();
@@ -147,6 +148,7 @@ class CategoryProviderForDropDown with ChangeNotifier {
     }
     if (oldSubValue!.cId == catId && oldSubValue.sCId == subCatId) {
       _subCategorySelection = oldSubValue;
+
       print(3434343434);
       print(_subCategorySelection!.toMap());
     }
